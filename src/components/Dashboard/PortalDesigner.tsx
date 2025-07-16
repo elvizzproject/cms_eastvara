@@ -42,7 +42,31 @@ const PortalDesigner: React.FC = () => {
     if (design) {
       setDesign({
         ...design,
-        [field]: value
+        [field]: value,
+        updatedAt: new Date(),
+        updatedBy: 'admin' // In real app, this would be current user
+      });
+    }
+  };
+
+  const handleBooleanChange = (field: keyof PortalDesign, value: boolean) => {
+    if (design) {
+      setDesign({
+        ...design,
+        [field]: value,
+        updatedAt: new Date(),
+        updatedBy: 'admin'
+      });
+    }
+  };
+
+  const handleNumberChange = (field: keyof PortalDesign, value: number) => {
+    if (design) {
+      setDesign({
+        ...design,
+        [field]: value,
+        updatedAt: new Date(),
+        updatedBy: 'admin'
       });
     }
   };
@@ -53,9 +77,10 @@ const PortalDesigner: React.FC = () => {
     setSaving(true);
     try {
       await api.updatePortalDesign(design);
-      // Show success message
+      alert('Portal design saved successfully!');
     } catch (error) {
       console.error('Error saving design:', error);
+      alert('Error saving design. Please try again.');
     } finally {
       setSaving(false);
     }
@@ -172,7 +197,7 @@ const PortalDesigner: React.FC = () => {
                 <img
                   src={design.logo}
                   alt="Logo Preview"
-                  className="w-16 h-16 rounded-full object-cover"
+                  className="w-16 h-16 object-contain"
                   onError={(e) => {
                     e.currentTarget.src = 'https://images.pexels.com/photos/6177/technology-computer-laptop-internet.jpg?auto=compress&cs=tinysrgb&w=100';
                   }}
@@ -299,7 +324,7 @@ const PortalDesigner: React.FC = () => {
                 <input
                   type="number"
                   value={design.redirectDelay}
-                  onChange={(e) => handleInputChange('redirectDelay', parseInt(e.target.value) || 0)}
+                  onChange={(e) => handleNumberChange('redirectDelay', parseInt(e.target.value) || 0)}
                   min="0"
                   max="60"
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -325,7 +350,7 @@ const PortalDesigner: React.FC = () => {
                 <input
                   type="checkbox"
                   checked={design.showCampaign}
-                  onChange={(e) => handleInputChange('showCampaign', e.target.checked)}
+                  onChange={(e) => handleBooleanChange('showCampaign', e.target.checked)}
                   className="w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
                 />
               </div>
@@ -440,7 +465,7 @@ const PortalDesigner: React.FC = () => {
                         <img 
                           src={design.logo} 
                           alt="Logo" 
-                          className="w-12 h-12 rounded-full mx-auto mb-3 object-cover"
+                          className="w-12 h-12 mx-auto mb-3 object-contain"
                           onError={(e) => {
                             e.currentTarget.src = 'https://images.pexels.com/photos/6177/technology-computer-laptop-internet.jpg?auto=compress&cs=tinysrgb&w=100';
                           }}

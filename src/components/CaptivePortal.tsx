@@ -212,7 +212,7 @@ const CaptivePortal: React.FC = () => {
           <img 
             src={portalDesign.logo} 
             alt="Logo" 
-            className="w-16 h-16 rounded-full mx-auto mb-4 object-cover"
+            className="w-16 h-16 mx-auto mb-4 object-contain"
           />
           <h1 
             className="text-2xl font-bold mb-2"
